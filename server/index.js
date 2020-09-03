@@ -12,8 +12,6 @@ app.use(express.static('./public'));
 
 app.get('/:name', async (req, res) => {
 
-  console.log("URLS"+urls);
-
   const puny = await urls.find(req.params.name);
   console.log(puny);
   if (puny) {
@@ -25,6 +23,7 @@ app.get('/:name', async (req, res) => {
 
 app.post('/api/Shortner', async (req, res) => {
   try {
+    console.log("in create");
     const url = await urls.create(req.body);
     res.json(url);
     console.log(url);

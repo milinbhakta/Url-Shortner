@@ -26,7 +26,7 @@ function find(name) {
 */
 async function create(almostPuny) {
   const result = Joi.validate(almostPuny, schema);
-  // result.error === null
+  console.log("$$$RESULT"+result);
   if (result.error === null) {
     const url = await urls.findOne({
       name: almostPuny.name
