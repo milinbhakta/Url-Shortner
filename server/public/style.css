@@ -1,8 +1,26 @@
 main {
-    width: 80%;
-    margin: 2em auto 0 auto;
-  }
-  
-  .puny-button {
-    text-align: center;
-  }
+  width: 80%;
+  margin: 2em auto 0 auto;
+}
+
+.puny-button {
+  text-align: center;
+}
+
+.title-clr{
+  color: #70e1f5;
+  font-family: 'Sansita', sans-serif;
+}
+.bg-img {
+  background: #70e1f5; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ffd194,
+    #70e1f5
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ffd194,
+    #70e1f5
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
