@@ -1,7 +1,6 @@
 const Joi = require('joi');
-const db = require('./connection');
+const client = require('./connection');
 
-const urls = db.get('urls');
 
 const schema = Joi.object().keys({
   name: Joi.string().token().min(1).max(100).required(),
@@ -13,9 +12,26 @@ const schema = Joi.object().keys({
 }).with('name', 'url');
 
 function find(name) {
-  return urls.findOne({
-    name
+
+  var result;
+
+  client.connect(err => {
+    const collection = client.db("anu").collection("urls");
+
+    result = collection.findOne({
+      $where: [{
+        'name': name
+      }]
+    });
+
+    client.close();
   });
+
+  return result;
+
+  // return urls.findOne({
+  //   name
+  // });
 }
 
 /*
@@ -24,15 +40,28 @@ function find(name) {
   name: 'super-catchy'
 }
 */
-async function create(almostPuny) {
-  const result = Joi.validate(almostPuny, schema);
-  console.log("$$$RESULT"+result);
+async function create(almostAnu) {
+  const result = Joi.validate(almostAnu, schema);
+  console.log("$$$RESULT" + result);
   if (result.error === null) {
     const url = await urls.findOne({
-      name: almostPuny.name
+      name: almostAbu.name
     });
     if (!url) {
-      return urls.insert(almostPuny);
+      var result1;
+      client.connect(err => {
+        const collection = client.db("anu").collection("urls");
+
+        try {
+          collection.insertOne(almostAnu);
+        } catch (e) {
+          console.log(e);
+        };
+
+        client.close();
+      });
+      // return urls.insert(almostAnu);
+      return result1;
     } else {
       return Promise.reject({
         isJoi: true,

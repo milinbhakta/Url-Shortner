@@ -21,7 +21,7 @@ app.get('/:name', async (req, res) => {
   }
 });
 
-app.post('/api/Shortner', async (req, res) => {
+app.post('/api/anu', async (req, res) => {
   try {
     console.log("in create");
     const url = await urls.create(req.body);

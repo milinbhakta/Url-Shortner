@@ -13,7 +13,7 @@ new Vue({
           url: this.url
         };
   
-        fetch('/api/Shortner', {
+        fetch('/api/anu', {
           method: 'POST',
           body: JSON.stringify(body),
           headers: {
