@@ -1,6 +1,7 @@
 const Joi = require('joi');
-const client = require('./connection');
+const db = require('./connection');
 
+const urls = db.get('urls');
 
 const schema = Joi.object().keys({
   name: Joi.string().token().min(1).max(100).required(),
@@ -12,26 +13,9 @@ const schema = Joi.object().keys({
 }).with('name', 'url');
 
 function find(name) {
-
-  var result;
-
-  client.connect(err => {
-    const collection = client.db("anu").collection("urls");
-
-    result = collection.findOne({
-      $where: [{
-        'name': name
-      }]
-    });
-
-    client.close();
+  return urls.findOne({
+    name
   });
-
-  return result;
-
-  // return urls.findOne({
-  //   name
-  // });
 }
 
 /*
@@ -42,26 +26,13 @@ function find(name) {
 */
 async function create(almostAnu) {
   const result = Joi.validate(almostAnu, schema);
-  console.log("$$$RESULT" + result);
+  // result.error === null
   if (result.error === null) {
     const url = await urls.findOne({
-      name: almostAbu.name
+      name: almostAnu.name
     });
     if (!url) {
-      var result1;
-      client.connect(err => {
-        const collection = client.db("anu").collection("urls");
-
-        try {
-          collection.insertOne(almostAnu);
-        } catch (e) {
-          console.log(e);
-        };
-
-        client.close();
-      });
-      // return urls.insert(almostAnu);
-      return result1;
+      return urls.insert(almostAnu);
     } else {
       return Promise.reject({
         isJoi: true,
